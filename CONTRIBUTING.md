@@ -25,9 +25,9 @@ chore: configure eslint
 
 Common commit types:
 
-* feat: Adds a new feature.
-* fix: Fixes a bug.
-* docs: Adds, updates, or removes documentation.
-* refactor: Improves or restructures code without changing its external behavior.
-* test: Adds or updates tests.
-* chore: Performs maintenance tasks, project configuration, dependency updates, or other changes that do not affect the application's behavior.
+- feat: Adds a new feature.
+- fix: Fixes a bug.
+- docs: Adds, updates, or removes documentation.
+- refactor: Improves or restructures code without changing its external behavior.
+- test: Adds or updates tests.
+- chore: Performs maintenance tasks, project configuration, dependency updates, or other changes that do not affect the application's behavior.

@@ -10,17 +10,17 @@ Alumiar was inspired by [The Every Day Calendar](https://yetch.studio/products/e
 
 ## Technologies
 
-* React Native
-* TypeScript
-* SQLite
-* Expo Notifications
+- React Native
+- TypeScript
+- SQLite
+- Expo Notifications
 
 ## Documentation
 
-Project documentation is available in the `docs/` directory. 
+Project documentation is available in the `docs/` directory.
 
 The engineering documentation is currently available in Brazilian Portuguese.
 
-* **SRS** – Software Requirements Specification.
-* **Architecture** – Technologies and project structure.
-* **Data Model** – Application data model.
+- **SRS** – Software Requirements Specification.
+- **Architecture** – Technologies and project structure.
+- **Data Model** – Application data model.
