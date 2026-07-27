@@ -6,7 +6,10 @@ import { typography } from '@/shared/theme/typography';
 export const Container = styled.View`
     align-items: center;
     background-color: ${colors.background};
-    padding-bottom: ${spacing.lg}px;
+    padding-bottom: ${spacing.md}px;
+
+    border-bottom-width: 1px;
+    border-color: ${colors.accent};
 `;
 
 export const Week = styled.View`

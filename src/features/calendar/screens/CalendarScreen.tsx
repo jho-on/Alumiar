@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { colors } from '@/shared/theme/colors';
 import HorizontalStepper from '../components/HorizontalStepper/HorizontalStepper';
 import Calendar from '../components/Calendar/Calendar';
+import Card from '@/shared/components/Card/Card';
 
 const months = [
     'Jan',
@@ -62,6 +63,8 @@ export default function CalendarScreen() {
             />
 
             <Calendar year={year} month={month}></Calendar>
+
+            <Card></Card>
         </>
     );
 }
