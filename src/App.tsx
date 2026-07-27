@@ -5,7 +5,8 @@ import {
     IBMPlexMono_400Regular,
     IBMPlexMono_700Bold,
 } from '@expo-google-fonts/ibm-plex-mono';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import NavBar from './shared/components/NavBar/NavBar';
 
 export default function App() {
     const [loaded] = useFonts({
@@ -18,8 +19,12 @@ export default function App() {
     }
 
     return (
-        <ScrollView>
-            <CalendarScreen></CalendarScreen>
-        </ScrollView>
+        <View style={{ flex: 1 }}>
+            <ScrollView>
+                <CalendarScreen />
+            </ScrollView>
+
+            <NavBar />
+        </View>
     );
 }
