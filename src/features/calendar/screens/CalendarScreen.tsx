@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { View } from 'react-native';
 import { colors } from '@/shared/theme/colors';
-import HorizontalStepper from '../components/HorizontalStepper/HorizontalStepper';
 import Calendar from '../components/Calendar/Calendar';
 import Card from '@/shared/components/Card/Card';
+import HorizontalStepper from '@/shared/components/HorizontalStepper/HorizontalStepper';
 
 const months = [
     'Jan',

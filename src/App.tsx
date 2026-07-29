@@ -1,5 +1,3 @@
-import CalendarScreen from './features/calendar/screens/CalendarScreen';
-
 import { useFonts } from 'expo-font';
 import {
     IBMPlexMono_400Regular,
@@ -7,6 +5,7 @@ import {
 } from '@expo-google-fonts/ibm-plex-mono';
 import { ScrollView, View } from 'react-native';
 import NavBar from './shared/components/NavBar/NavBar';
+import Routine from './features/routine/screens/Routine';
 
 export default function App() {
     const [loaded] = useFonts({
@@ -21,7 +20,7 @@ export default function App() {
     return (
         <View style={{ flex: 1 }}>
             <ScrollView>
-                <CalendarScreen />
+                <Routine />
             </ScrollView>
 
             <NavBar />
