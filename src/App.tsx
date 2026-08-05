@@ -5,7 +5,7 @@ import {
 } from '@expo-google-fonts/ibm-plex-mono';
 import { ScrollView, View } from 'react-native';
 import NavBar from './shared/components/NavBar/NavBar';
-import Routine from './features/routine/screens/Routine';
+import History from './features/history/screens/History';
 
 export default function App() {
     const [loaded] = useFonts({
@@ -20,7 +20,7 @@ export default function App() {
     return (
         <View style={{ flex: 1 }}>
             <ScrollView>
-                <Routine />
+                <History />
             </ScrollView>
 
             <NavBar />

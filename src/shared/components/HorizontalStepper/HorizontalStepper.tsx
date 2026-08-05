@@ -1,4 +1,4 @@
-import StepperButton from '../StepperButton/StepperButton';
+import IconButton from '../IconButton/IconButton';
 import { Container, Value } from './style';
 
 type HorizontalStepperProps = {
@@ -14,9 +14,9 @@ export default function HorizontalStepper({
 }: HorizontalStepperProps) {
     return (
         <Container>
-            <StepperButton direction="prev" onPress={onPrevious} />
+            <IconButton icon="<" onPress={onPrevious} />
             <Value>{value}</Value>
-            <StepperButton direction="next" onPress={onNext} />
+            <IconButton icon=">" onPress={onNext} />
         </Container>
     );
 }

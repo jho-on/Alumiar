@@ -18,8 +18,8 @@ type TaskProps = {
     onDelete: () => void;
 };
 
-import BinIcon from '@/features/routine/assets/bin.svg';
-import PenIcon from '@/features/routine/assets/pen.svg';
+import BinIcon from '@/../assets/bin.svg';
+import PenIcon from '@/../assets/pen.svg';
 import { View } from 'react-native';
 
 export default function Task({
