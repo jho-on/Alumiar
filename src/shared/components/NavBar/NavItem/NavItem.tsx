@@ -7,6 +7,7 @@ type NavItemProps = {
     active?: boolean;
     icon: ComponentType<SvgProps>;
     activeIcon: ComponentType<SvgProps>;
+    onPress: () => void;
 };
 
 export default function NavItem({
@@ -14,12 +15,13 @@ export default function NavItem({
     active = false,
     icon: Icon,
     activeIcon: ActiveIcon,
+    onPress,
 }: NavItemProps) {
     const CurrentIcon = active ? ActiveIcon : Icon;
 
     return (
         <Container>
-            <Button $active={active}>
+            <Button $active={active} onPress={onPress}>
                 <CurrentIcon width={24} height={24} />
             </Button>
 

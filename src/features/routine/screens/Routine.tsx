@@ -21,7 +21,13 @@ const months = [
     'Dez',
 ];
 
-export default function Routine() {
+import { Page } from '@/shared/types/Page';
+
+type RoutineProps = {
+    setPage: (page: Page) => void;
+};
+
+export default function Routine({ setPage }: RoutineProps) {
     const date: Date = new Date();
 
     const [month, setMonth] = useState(date.getMonth());
@@ -139,7 +145,10 @@ export default function Routine() {
 
             <TaskHeader></TaskHeader>
             <TaskList></TaskList>
-            <TaskFooter lastUpdated="Ultima atualização: 20 abr. de 2025"></TaskFooter>
+            <TaskFooter
+                lastUpdated="Ultima atualização: 20 abr. de 2025"
+                onHistoryPress={() => setPage('History')}
+            ></TaskFooter>
         </View>
     );
 }

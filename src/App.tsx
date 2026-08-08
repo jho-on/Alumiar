@@ -3,11 +3,17 @@ import {
     IBMPlexMono_400Regular,
     IBMPlexMono_700Bold,
 } from '@expo-google-fonts/ibm-plex-mono';
-import { ScrollView, View } from 'react-native';
+import { View } from 'react-native';
 import NavBar from './shared/components/NavBar/NavBar';
+import { useState } from 'react';
+import Routine from './features/routine/screens/Routine';
+import CalendarScreen from './features/calendar/screens/CalendarScreen';
 import History from './features/history/screens/History';
+import { Page } from '@/shared/types/Page';
 
 export default function App() {
+    const [page, setPage] = useState<Page>('Calendar');
+
     const [loaded] = useFonts({
         'IBM Plex Mono': IBMPlexMono_400Regular,
         'IBM Plex Mono Bold': IBMPlexMono_700Bold,
@@ -19,11 +25,12 @@ export default function App() {
 
     return (
         <View style={{ flex: 1 }}>
-            <ScrollView>
-                <History />
-            </ScrollView>
-
-            <NavBar />
+            <View style={{ flex: 1 }}>
+                {page === 'Calendar' && <CalendarScreen />}
+                {page === 'Routine' && <Routine setPage={setPage} />}
+                {page === 'History' && <History />}
+            </View>
+            <NavBar page={page} setPage={setPage} />
         </View>
     );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { colors } from '@/shared/theme/colors';
 import Calendar from '../components/Calendar/Calendar';
 import Card from '@/shared/components/Card/Card';
@@ -42,7 +42,7 @@ export default function CalendarScreen() {
     };
 
     return (
-        <>
+        <ScrollView>
             <View
                 style={{
                     borderBottomWidth: 1,
@@ -65,6 +65,6 @@ export default function CalendarScreen() {
             <Calendar year={year} month={month}></Calendar>
 
             <Card></Card>
-        </>
+        </ScrollView>
     );
 }
