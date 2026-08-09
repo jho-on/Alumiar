@@ -12,9 +12,23 @@ import History from './features/history/screens/History';
 import { Page } from '@/shared/types/Page';
 import DatabaseProvider from './database/DatabaseProvider';
 
-export default function App() {
+function AppContent() {
     const [page, setPage] = useState<Page>('Calendar');
 
+    return (
+        <View style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
+                {page === 'Calendar' && <CalendarScreen />}
+                {page === 'Routine' && <Routine setPage={setPage} />}
+                {page === 'History' && <History />}
+            </View>
+
+            <NavBar page={page} setPage={setPage} />
+        </View>
+    );
+}
+
+export default function App() {
     const [loaded] = useFonts({
         'IBM Plex Mono': IBMPlexMono_400Regular,
         'IBM Plex Mono Bold': IBMPlexMono_700Bold,
@@ -25,15 +39,8 @@ export default function App() {
     }
 
     return (
-        <View style={{ flex: 1 }}>
-            <View style={{ flex: 1 }}>
-                <DatabaseProvider>
-                    {page === 'Calendar' && <CalendarScreen />}
-                    {page === 'Routine' && <Routine setPage={setPage} />}
-                    {page === 'History' && <History />}
-                </DatabaseProvider>
-            </View>
-            <NavBar page={page} setPage={setPage} />
-        </View>
+        <DatabaseProvider>
+            <AppContent />
+        </DatabaseProvider>
     );
 }
