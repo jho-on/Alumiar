@@ -11,20 +11,26 @@ import CalendarScreen from './features/calendar/screens/CalendarScreen';
 import History from './features/history/screens/History';
 import { Page } from '@/shared/types/Page';
 import DatabaseProvider from './database/DatabaseProvider';
+import { ModalProvider } from './shared/contexts/ModalContext';
+import { ToastProvider } from './shared/contexts/ToastContext';
 
 function AppContent() {
     const [page, setPage] = useState<Page>('Calendar');
 
     return (
-        <View style={{ flex: 1 }}>
-            <View style={{ flex: 1 }}>
-                {page === 'Calendar' && <CalendarScreen />}
-                {page === 'Routine' && <Routine setPage={setPage} />}
-                {page === 'History' && <History />}
-            </View>
+        <ToastProvider>
+            <ModalProvider>
+                <View style={{ flex: 1 }}>
+                    <View style={{ flex: 1 }}>
+                        {page === 'Calendar' && <CalendarScreen />}
+                        {page === 'Routine' && <Routine setPage={setPage} />}
+                        {page === 'History' && <History />}
+                    </View>
 
-            <NavBar page={page} setPage={setPage} />
-        </View>
+                    <NavBar page={page} setPage={setPage} />
+                </View>
+            </ModalProvider>
+        </ToastProvider>
     );
 }
 
