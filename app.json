@@ -14,7 +14,8 @@
       "package": "com.manamanoapp.Alumiar"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-sqlite"
     ]
   }
 }

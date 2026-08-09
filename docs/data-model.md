@@ -12,6 +12,7 @@ Representa uma tarefa referente a rotina do usuario.
 | title     | TEXT     | Nome da tarefa.           |
 | createdAt | DATETIME | Data de criação.          |
 | updatedAt | DATETIME | Data da última alteração. |
+| deletedAt | DATETIME | Data da exclusao.         |
 
 ---
 

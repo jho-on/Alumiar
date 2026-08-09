@@ -10,6 +10,7 @@ import Routine from './features/routine/screens/Routine';
 import CalendarScreen from './features/calendar/screens/CalendarScreen';
 import History from './features/history/screens/History';
 import { Page } from '@/shared/types/Page';
+import DatabaseProvider from './database/DatabaseProvider';
 
 export default function App() {
     const [page, setPage] = useState<Page>('Calendar');
@@ -26,9 +27,11 @@ export default function App() {
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-                {page === 'Calendar' && <CalendarScreen />}
-                {page === 'Routine' && <Routine setPage={setPage} />}
-                {page === 'History' && <History />}
+                <DatabaseProvider>
+                    {page === 'Calendar' && <CalendarScreen />}
+                    {page === 'Routine' && <Routine setPage={setPage} />}
+                    {page === 'History' && <History />}
+                </DatabaseProvider>
             </View>
             <NavBar page={page} setPage={setPage} />
         </View>
