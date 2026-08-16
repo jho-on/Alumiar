@@ -1,3 +1,4 @@
+import { useSQLiteContext } from 'expo-sqlite';
 import CalendarDay from '../CalendarDay/CalendarDay';
 import {
     Container,
@@ -6,6 +7,8 @@ import {
     LabelsContainer,
     Week,
 } from './style';
+import { useEffect, useState } from 'react';
+import { getCompletedDays } from '@/shared/services/TaskCompletionService';
 
 type CalendarProps = {
     year: number;
@@ -13,20 +16,36 @@ type CalendarProps = {
 };
 
 export default function Calendar({ year, month }: CalendarProps) {
+    const db = useSQLiteContext();
+
+    const [completedDays, setCompletedDays] = useState<Set<string>>(new Set());
+
+    useEffect(() => {
+        const loadCompletedDays = async () => {
+            const data = await getCompletedDays(db, year, month);
+            setCompletedDays(new Set(data));
+        };
+
+        loadCompletedDays();
+    }, [db, year, month]);
+
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstWeekDay = new Date(year, month, 1).getDay();
     const firstColumn = (firstWeekDay + 6) % 7;
     const totalCells = firstColumn + daysInMonth;
-
     const cells = [];
 
     for (let index = 0; index < totalCells; index++) {
         const disabled = index < firstColumn;
+        const day = index - firstColumn + 1;
+        const date = `${year}-${String(month + 1).padStart(2, '0')}-${String(
+            day,
+        ).padStart(2, '0')}`;
 
         cells.push(
             <CalendarDay
                 key={index}
-                checked={false}
+                checked={!disabled && completedDays.has(date)}
                 disabled={disabled}
                 onPress={() => {}}
             />,

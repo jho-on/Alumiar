@@ -51,3 +51,26 @@ export async function selectByTaskAndDate(
         date,
     );
 }
+
+export async function selectCompletedDays(
+    db: SQLiteDatabase,
+    year: number,
+    month: number,
+): Promise<{ date: string }[]> {
+    const monthPrefix = `${year}-${String(month + 1).padStart(2, '0')}-%`;
+
+    return await db.getAllAsync<{ date: string }>(
+        `
+        SELECT date
+        FROM taskCompletion
+        WHERE date LIKE ?
+        GROUP BY date
+        HAVING COUNT(DISTINCT taskId) = (
+            SELECT COUNT(*)
+            FROM task
+            WHERE deletedAt IS NULL
+        )
+        `,
+        monthPrefix,
+    );
+}

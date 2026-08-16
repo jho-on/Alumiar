@@ -5,6 +5,7 @@ import {
     insert,
     deleteByTaskAndDate,
     selectByTaskAndDate,
+    selectCompletedDays,
 } from '../repositories/TaskCompletionRepository';
 
 export async function completeTask(
@@ -33,4 +34,14 @@ export async function isCompleted(
     const result = await selectByTaskAndDate(db, taskId, date);
 
     return result !== null;
+}
+
+export async function getCompletedDays(
+    db: SQLiteDatabase,
+    year: number,
+    month: number,
+): Promise<string[]> {
+    const result = await selectCompletedDays(db, year, month);
+
+    return result.map((row) => row.date);
 }

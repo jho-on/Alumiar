@@ -5,16 +5,50 @@ import { changeTitleById, markAsDeleted } from '@/shared/services/TaskService';
 import { Task as TaskType } from '@/shared/types/Task';
 import { useToast } from '@/shared/contexts/ToastContext';
 import { useModal } from '@/shared/contexts/ModalContext';
+import { useEffect, useState } from 'react';
+import {
+    completeTask,
+    isCompleted,
+    uncompleteTask,
+} from '@/shared/services/TaskCompletionService';
 
 type TaskListProps = {
     tasks: TaskType[];
+    date: string;
     reloadTasks: () => Promise<void>;
+    onCompletionChanged: (completed: number) => void;
 };
 
-export default function TaskList({ tasks, reloadTasks }: TaskListProps) {
+export default function TaskList({
+    tasks,
+    date,
+    reloadTasks,
+    onCompletionChanged,
+}: TaskListProps) {
     const db = useSQLiteContext();
     const { showToast } = useToast();
     const { openModal, closeModal } = useModal();
+
+    const [completedTasks, setCompletedTasks] = useState<Set<string>>(
+        new Set(),
+    );
+
+    useEffect(() => {
+        const loadCompletions = async () => {
+            const completed = new Set<string>();
+
+            for (const task of tasks) {
+                if (await isCompleted(db, task.id, date)) {
+                    completed.add(task.id);
+                }
+            }
+
+            setCompletedTasks(completed);
+            onCompletionChanged(completed.size);
+        };
+
+        loadCompletions();
+    }, [db, tasks, date, onCompletionChanged]);
 
     const handleDelete = (taskId: string, title: string) => {
         openModal({
@@ -84,6 +118,25 @@ export default function TaskList({ tasks, reloadTasks }: TaskListProps) {
         return `${day} ${month} ${year}`;
     }
 
+    const handleCheck = async (taskId: string) => {
+        try {
+            const updated = new Set(completedTasks);
+
+            if (updated.has(taskId)) {
+                await uncompleteTask(db, taskId, date);
+                updated.delete(taskId);
+            } else {
+                await completeTask(db, taskId, date);
+                updated.add(taskId);
+            }
+
+            setCompletedTasks(updated);
+            onCompletionChanged(updated.size);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <Container>
             {tasks.map((task) => {
@@ -97,10 +150,11 @@ export default function TaskList({ tasks, reloadTasks }: TaskListProps) {
                 return (
                     <Task
                         key={task.id}
-                        checked={false}
+                        checked={completedTasks.has(task.id)}
                         title={task.title}
                         onDelete={() => handleDelete(task.id, task.title)}
                         onEdit={() => handleEdit(task.id, task.title)}
+                        onCheck={() => handleCheck(task.id)}
                         createdAt={createdAt}
                         updatedAt={updatedAt}
                     />

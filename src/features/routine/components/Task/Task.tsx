@@ -16,6 +16,7 @@ type TaskProps = {
     updatedAt?: string;
     onEdit: () => void;
     onDelete: () => void;
+    onCheck: () => void;
 };
 
 import BinIcon from '@/../assets/bin.svg';
@@ -28,10 +29,11 @@ export default function Task({
     updatedAt,
     onEdit,
     onDelete,
+    onCheck,
 }: TaskProps) {
     return (
         <Container>
-            <CheckBox $checked={checked}></CheckBox>
+            <CheckBox $checked={checked} onPress={onCheck}></CheckBox>
             <InfoContainer>
                 <Title>{title}</Title>
                 {updatedAt && <Subtitle>{updatedAt}</Subtitle>}

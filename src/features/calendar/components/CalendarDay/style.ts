@@ -11,6 +11,8 @@ export const Glow = styled.View<{ $checked: boolean; $disabled?: boolean }>`
     justify-content: center;
 
     border-radius: ${radius.full}px;
+    border-width: 1px;
+    border-color: transparent;
 
     background-color: ${({ $checked }) =>
         $checked ? 'rgba(255, 215, 0, 0.15)' : 'transparent'};

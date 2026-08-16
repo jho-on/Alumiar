@@ -38,6 +38,11 @@ export default function Routine({ setPage }: RoutineProps) {
     const [day, setDay] = useState(date.getDate());
     const [year, setYear] = useState(date.getFullYear());
     const [tasks, setTasks] = useState<TaskType[]>([]);
+    const [completedNumber, setCompletedNumber] = useState(0);
+
+    const handleCompletionChanged = useCallback((completed: number) => {
+        setCompletedNumber(completed);
+    }, []);
 
     const reloadTasks = useCallback(async () => {
         const data = await getAll(db);
@@ -153,13 +158,18 @@ export default function Routine({ setPage }: RoutineProps) {
                     onPrevious={prevDay}
                 ></HorizontalStepper>
                 <CompletionInfo
-                    completedNumber={4}
-                    totalNumber={5}
+                    completedNumber={completedNumber}
+                    totalNumber={tasks.length}
                 ></CompletionInfo>
             </View>
 
             <TaskHeader reloadTasks={reloadTasks}></TaskHeader>
-            <TaskList tasks={tasks} reloadTasks={reloadTasks}></TaskList>
+            <TaskList
+                tasks={tasks}
+                date={`${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`}
+                reloadTasks={reloadTasks}
+                onCompletionChanged={handleCompletionChanged}
+            ></TaskList>
             <TaskFooter
                 lastUpdated="Ultima atualização: 20 abr. de 2025"
                 onHistoryPress={() => setPage('History')}
