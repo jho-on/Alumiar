@@ -9,9 +9,9 @@ import CloseIcon from '@/../assets/close.svg';
 
 export default function Toast({ text, onClose }: ToastProps) {
     return (
-        <Container>
+        <Container onPress={onClose}>
             <Text>{text}</Text>
-            <CloseIcon onPress={onClose} width={32} height={32} />
+            <CloseIcon width={32} height={32} />
         </Container>
     );
 }
