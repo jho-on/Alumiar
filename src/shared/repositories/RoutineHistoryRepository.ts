@@ -6,6 +6,8 @@ export async function insert(
     taskId: string,
     type: string,
     timestamp: string,
+    oldTitle?: string,
+    newTitle?: string,
 ) {
     await db.runAsync(
         `
@@ -13,14 +15,18 @@ export async function insert(
             id,
             taskId,
             type,
-            timestamp
+            timestamp,
+            oldTitle,
+            newTitle
         )
-        VALUES (?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?)
         `,
         id,
         taskId,
         type,
         timestamp,
+        oldTitle ?? null,
+        newTitle ?? null,
     );
 }
 

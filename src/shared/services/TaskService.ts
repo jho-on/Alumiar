@@ -7,12 +7,14 @@ import {
     updateById,
 } from '../repositories/TaskRepository';
 import * as Crypto from 'expo-crypto';
+import { createEntry } from './RoutineHistoryService';
 
 export async function createTask(db: SQLiteDatabase, title: string) {
     const id = Crypto.randomUUID();
     const now = new Date().toISOString();
 
     await insert(db, id, title, now);
+    await createEntry(db, id, 'CREATE', undefined, title);
 }
 
 export async function getAll(db: SQLiteDatabase) {
@@ -24,9 +26,17 @@ export async function getById(db: SQLiteDatabase, id: string) {
 }
 
 export async function markAsDeleted(db: SQLiteDatabase, id: string) {
+    const task = await getById(db, id);
+
+    if (!task) {
+        throw new Error(`Task ${id} not found`);
+    }
+
     const now = new Date().toISOString();
 
-    return await softDeleteById(db, id, now);
+    await softDeleteById(db, id, now);
+
+    await createEntry(db, id, 'DELETE', task.title);
 }
 
 export async function changeTitleById(
@@ -34,7 +44,14 @@ export async function changeTitleById(
     id: string,
     newTitle: string,
 ) {
+    const task = await getById(db, id);
+
+    if (!task) {
+        throw new Error(`Task ${id} not found`);
+    }
+
     const now = new Date().toISOString();
 
     await updateById(db, id, newTitle, now);
+    await createEntry(db, id, 'UPDATE', task.title, newTitle);
 }

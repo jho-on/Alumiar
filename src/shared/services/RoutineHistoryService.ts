@@ -12,11 +12,13 @@ export async function createEntry(
     db: SQLiteDatabase,
     taskId: string,
     type: HistoryType,
+    oldTitle?: string,
+    newTitle?: string,
 ) {
     const id = Crypto.randomUUID();
     const timestamp = new Date().toISOString();
 
-    await insert(db, id, taskId, type, timestamp);
+    await insert(db, id, taskId, type, timestamp, oldTitle, newTitle);
 }
 
 export async function getAll(db: SQLiteDatabase) {

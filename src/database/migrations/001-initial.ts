@@ -41,6 +41,8 @@ export async function migrateDbIfNeeded(db: SQLiteDatabase) {
                 taskId TEXT NOT NULL,
                 type TEXT NOT NULL
                     CHECK (type IN ('CREATE', 'UPDATE', 'DELETE')),
+                oldTitle TEXT,
+                newTitle TEXT,
                 timestamp TEXT NOT NULL,
 
                 CONSTRAINT fk_task_history
