@@ -1,21 +1,18 @@
 {
-  "expo": {
-    "name": "Alumiar",
-    "slug": "Alumiar",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "userInterfaceStyle": "light",
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.alumiar.app"
-    },
-    "android": {
-      "predictiveBackGestureEnabled": false,
-      "package": "com.alumiar.app"
-    },
-    "plugins": [
-      "expo-font",
-      "expo-sqlite"
-    ]
-  }
+    "expo": {
+        "name": "Alumiar",
+        "slug": "Alumiar",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "userInterfaceStyle": "light",
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.alumiar.app"
+        },
+        "android": {
+            "predictiveBackGestureEnabled": false,
+            "package": "com.alumiar.app"
+        },
+        "plugins": ["expo-font", "expo-sqlite"]
+    }
 }

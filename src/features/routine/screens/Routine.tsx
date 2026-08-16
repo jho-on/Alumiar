@@ -39,6 +39,7 @@ export default function Routine({ setPage }: RoutineProps) {
     const [year, setYear] = useState(date.getFullYear());
     const [tasks, setTasks] = useState<TaskType[]>([]);
     const [completedNumber, setCompletedNumber] = useState(0);
+    const selectedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
     const handleCompletionChanged = useCallback((completed: number) => {
         setCompletedNumber(completed);
@@ -163,10 +164,13 @@ export default function Routine({ setPage }: RoutineProps) {
                 ></CompletionInfo>
             </View>
 
-            <TaskHeader reloadTasks={reloadTasks}></TaskHeader>
+            <TaskHeader
+                reloadTasks={reloadTasks}
+                date={selectedDate}
+            ></TaskHeader>
             <TaskList
                 tasks={tasks}
-                date={`${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`}
+                date={selectedDate}
                 reloadTasks={reloadTasks}
                 onCompletionChanged={handleCompletionChanged}
             ></TaskList>

@@ -61,15 +61,19 @@ export async function selectCompletedDays(
 
     return await db.getAllAsync<{ date: string }>(
         `
-        SELECT date
-        FROM taskCompletion
-        WHERE date LIKE ?
-        GROUP BY date
-        HAVING COUNT(DISTINCT taskId) = (
+        SELECT tc.date
+        FROM taskCompletion tc
+        GROUP BY tc.date
+        HAVING COUNT(DISTINCT tc.taskId) = (
             SELECT COUNT(*)
-            FROM task
-            WHERE deletedAt IS NULL
+            FROM task t
+            WHERE substr(t.createdAt, 1, 10) <= tc.date
+              AND (
+                  t.deletedAt IS NULL
+                  OR substr(t.deletedAt, 1, 10) > tc.date
+              )
         )
+        AND tc.date LIKE ?
         `,
         monthPrefix,
     );

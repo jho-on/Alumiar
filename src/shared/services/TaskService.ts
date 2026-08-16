@@ -9,12 +9,15 @@ import {
 import * as Crypto from 'expo-crypto';
 import { createEntry } from './RoutineHistoryService';
 
-export async function createTask(db: SQLiteDatabase, title: string) {
+export async function createTask(
+    db: SQLiteDatabase,
+    title: string,
+    date: string,
+) {
     const id = Crypto.randomUUID();
-    const now = new Date().toISOString();
 
-    await insert(db, id, title, now);
-    await createEntry(db, id, 'CREATE', undefined, title);
+    await insert(db, id, title, date);
+    await createEntry(db, id, 'CREATE', date, undefined, title);
 }
 
 export async function getAll(db: SQLiteDatabase) {
@@ -25,35 +28,36 @@ export async function getById(db: SQLiteDatabase, id: string) {
     return await selectById(db, id);
 }
 
-export async function markAsDeleted(db: SQLiteDatabase, id: string) {
+export async function markAsDeleted(
+    db: SQLiteDatabase,
+    id: string,
+    date: string,
+) {
     const task = await getById(db, id);
 
     if (!task) {
         throw new Error(`Task ${id} not found`);
     }
 
-    const now = new Date().toISOString();
+    await softDeleteById(db, id, date);
 
-    await softDeleteById(db, id, now);
-
-    await createEntry(db, id, 'DELETE', task.title);
+    await createEntry(db, id, 'DELETE', date, task.title);
 }
 
 export async function changeTitleById(
     db: SQLiteDatabase,
     id: string,
     newTitle: string,
+    date: string,
 ) {
     const task = await getById(db, id);
 
     if (!task) {
-        await createEntry(db, id, 'UPDATE', newTitle);
+        await createEntry(db, id, 'UPDATE', date, newTitle);
 
         throw new Error(`Task ${id} not found`);
     }
 
-    const now = new Date().toISOString();
-
-    await updateById(db, id, newTitle, now);
-    await createEntry(db, id, 'UPDATE', task.title, newTitle);
+    await updateById(db, id, newTitle, date);
+    await createEntry(db, id, 'UPDATE', date, task.title, newTitle);
 }

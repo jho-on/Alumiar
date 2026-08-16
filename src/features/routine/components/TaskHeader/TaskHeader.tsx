@@ -6,9 +6,10 @@ import { useToast } from '@/shared/contexts/ToastContext';
 
 type TaskHeaderProps = {
     reloadTasks: () => Promise<void>;
+    date: string;
 };
 
-export default function TaskHeader({ reloadTasks }: TaskHeaderProps) {
+export default function TaskHeader({ reloadTasks, date }: TaskHeaderProps) {
     const { openModal, closeModal } = useModal();
     const { showToast } = useToast();
 
@@ -20,7 +21,7 @@ export default function TaskHeader({ reloadTasks }: TaskHeaderProps) {
             const formattedTitle =
                 title.charAt(0).toUpperCase() + title.slice(1);
 
-            await createTask(db, formattedTitle);
+            await createTask(db, formattedTitle, date);
             await reloadTasks();
             closeModal();
             showToast('Tarefa "' + formattedTitle + '" criada!');

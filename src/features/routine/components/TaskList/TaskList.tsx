@@ -56,7 +56,7 @@ export default function TaskList({
             onCancel: closeModal,
             onConfirm: async () => {
                 try {
-                    await markAsDeleted(db, taskId);
+                    await markAsDeleted(db, taskId, date);
                     await reloadTasks();
                     closeModal();
                     showToast('Tarefa "' + title + '" deletada!');
@@ -80,7 +80,7 @@ export default function TaskList({
                     newTitle.charAt(0).toUpperCase() + newTitle.slice(1);
 
                 try {
-                    await changeTitleById(db, taskId, formattedTitle);
+                    await changeTitleById(db, taskId, formattedTitle, date);
                     await reloadTasks();
                     closeModal();
                     showToast(
