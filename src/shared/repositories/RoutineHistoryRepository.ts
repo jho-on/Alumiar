@@ -1,4 +1,5 @@
 import type { SQLiteDatabase } from 'expo-sqlite';
+import { RoutineHistory } from '../types/HistoryEntry';
 
 export async function insert(
     db: SQLiteDatabase,
@@ -30,7 +31,7 @@ export async function insert(
     );
 }
 
-export async function selectAll(db: SQLiteDatabase) {
+export async function selectAll(db: SQLiteDatabase): Promise<RoutineHistory[]> {
     return await db.getAllAsync(
         `
         SELECT *
@@ -40,7 +41,10 @@ export async function selectAll(db: SQLiteDatabase) {
     );
 }
 
-export async function selectById(db: SQLiteDatabase, id: string) {
+export async function selectById(
+    db: SQLiteDatabase,
+    id: string,
+): Promise<RoutineHistory | null> {
     return await db.getFirstAsync(
         `
         SELECT *

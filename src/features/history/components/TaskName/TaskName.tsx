@@ -23,11 +23,11 @@ export default function TaskName(props: TaskInfoProps) {
         return (
             <UpdateContainer>
                 <InfoLineContainer>
-                    <LabelTask>De: </LabelTask>
+                    <LabelTask>De:</LabelTask>
                     <OldTaskName>&quot;{props.oldTaskName}&quot;</OldTaskName>
                 </InfoLineContainer>
                 <InfoLineContainer>
-                    <LabelTask>Para: </LabelTask>
+                    <LabelTask>Para:</LabelTask>
                     <NewTaskName>&quot;{props.newTaskName}&quot;</NewTaskName>
                 </InfoLineContainer>
             </UpdateContainer>

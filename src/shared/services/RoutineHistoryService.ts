@@ -5,8 +5,7 @@ import {
     selectById,
 } from '../repositories/RoutineHistoryRepository';
 import * as Crypto from 'expo-crypto';
-
-type HistoryType = 'CREATE' | 'UPDATE' | 'DELETE';
+import { HistoryType, RoutineHistory } from '../types/HistoryEntry';
 
 export async function createEntry(
     db: SQLiteDatabase,
@@ -21,10 +20,13 @@ export async function createEntry(
     await insert(db, id, taskId, type, timestamp, oldTitle, newTitle);
 }
 
-export async function getAll(db: SQLiteDatabase) {
+export async function getAll(db: SQLiteDatabase): Promise<RoutineHistory[]> {
     return await selectAll(db);
 }
 
-export async function getById(db: SQLiteDatabase, id: string) {
+export async function getById(
+    db: SQLiteDatabase,
+    id: string,
+): Promise<RoutineHistory | null> {
     return await selectById(db, id);
 }

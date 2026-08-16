@@ -7,11 +7,11 @@
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.manamanoapp.Alumiar"
+      "bundleIdentifier": "com.alumiar.app"
     },
     "android": {
       "predictiveBackGestureEnabled": false,
-      "package": "com.manamanoapp.Alumiar"
+      "package": "com.alumiar.app"
     },
     "plugins": [
       "expo-font",

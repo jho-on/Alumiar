@@ -47,6 +47,8 @@ export async function changeTitleById(
     const task = await getById(db, id);
 
     if (!task) {
+        await createEntry(db, id, 'UPDATE', newTitle);
+
         throw new Error(`Task ${id} not found`);
     }
 

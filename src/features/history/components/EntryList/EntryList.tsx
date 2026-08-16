@@ -1,30 +1,71 @@
+import { useSQLiteContext } from 'expo-sqlite';
 import HistoryEntry from '../HistoryEntry/HistoryEntry';
 import { Container } from './style';
+import { useEffect, useState } from 'react';
+import { RoutineHistory } from '@/shared/types/HistoryEntry';
+import { getAll } from '@/shared/services/RoutineHistoryService';
 
 export default function EntryList() {
+    const db = useSQLiteContext();
+
+    const [entries, setEntries] = useState<RoutineHistory[]>();
+
+    useEffect(() => {
+        const loadEntries = async () => {
+            const data = await getAll(db);
+            setEntries(data);
+        };
+
+        loadEntries();
+    }, [db]);
+
+    function formatDate(timestamp: string) {
+        return new Date(timestamp).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+        });
+    }
+
     return (
         <Container>
-            <HistoryEntry
-                type="created"
-                date="25 de junho de 2026"
-                time="14:30"
-                taskName="Lavar a louça"
-            />
+            {entries?.map((entry) => {
+                const date = formatDate(entry.timestamp);
+                if (entry.type === 'CREATE') {
+                    return (
+                        <HistoryEntry
+                            key={entry.id}
+                            type="created"
+                            date={date}
+                            time="14:30"
+                            taskName={entry.newTitle ?? ''}
+                        />
+                    );
+                }
 
-            <HistoryEntry
-                type="updated"
-                date="25 de junho de 2026"
-                time="16:45"
-                oldTaskName="Lavar a louça"
-                newTaskName="Lavar a cozinha"
-            />
+                if (entry.type === 'UPDATE') {
+                    return (
+                        <HistoryEntry
+                            key={entry.id}
+                            type="updated"
+                            date={date}
+                            time="14:30"
+                            oldTaskName={entry.oldTitle ?? ''}
+                            newTaskName={entry.newTitle ?? ''}
+                        />
+                    );
+                }
 
-            <HistoryEntry
-                type="deleted"
-                date="26 de junho de 2026"
-                time="09:15"
-                taskName="Estudar React Native"
-            />
+                return (
+                    <HistoryEntry
+                        key={entry.id}
+                        type="deleted"
+                        date={date}
+                        time="14:30"
+                        taskName={entry.oldTitle ?? ''}
+                    />
+                );
+            })}
         </Container>
     );
 }
