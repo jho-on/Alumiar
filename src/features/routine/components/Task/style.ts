@@ -7,7 +7,7 @@ import { typography } from '@/shared/theme/typography';
 export const Container = styled.View`
     background-color: ${colors.background};
     flex-direction: row;
-    justify-content: space-between;
+    align-items: center;
     border-width: 1px;
     border-color: ${colors.border};
     border-radius: ${radius.sm}px;
@@ -18,25 +18,30 @@ export const Container = styled.View`
 export const CheckBox = styled.Pressable<{ $checked: boolean }>`
     width: 32px;
     height: 32px;
+    flex-shrink: 0;
+
     border-width: 1px;
     border-color: ${colors.accent};
     border-radius: ${radius.full}px;
+
     background-color: ${({ $checked }) =>
         $checked ? colors.accent : colors.background};
 
     margin-right: ${spacing.md}px;
-    align-self: center;
 `;
 
 export const InfoContainer = styled.View`
-    flex-direction: column;
-    justify-content: center;
+    flex: 1;
+    min-width: 0;
 `;
+
 export const Title = styled.Text`
+    flex-shrink: 1;
     color: ${colors.text};
     font-size: ${typography.subtitle.fontSize}px;
     font-family: ${typography.subtitle.fontFamily};
 `;
+
 export const Subtitle = styled.Text`
     color: ${colors.border};
     font-size: ${typography.body.fontSize}px;
@@ -46,8 +51,10 @@ export const Subtitle = styled.Text`
 
 export const ButtonsContainer = styled.View`
     flex-direction: row;
+    flex-shrink: 0;
     gap: ${spacing.md}px;
-    align-self: center;
+    margin-left: ${spacing.md}px;
 `;
+
 export const EditButton = styled.Pressable``;
 export const DeleteButton = styled.Pressable``;

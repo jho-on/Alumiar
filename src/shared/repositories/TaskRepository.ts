@@ -20,6 +20,7 @@ export async function insert(
         id,
         title,
         createdAt,
+        createdAt,
     );
 }
 

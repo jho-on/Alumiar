@@ -20,7 +20,6 @@ type TaskProps = {
 
 import BinIcon from '@/../assets/bin.svg';
 import PenIcon from '@/../assets/pen.svg';
-import { View } from 'react-native';
 
 export default function Task({
     checked,
@@ -32,18 +31,12 @@ export default function Task({
 }: TaskProps) {
     return (
         <Container>
-            <View
-                style={{
-                    flexDirection: 'row',
-                }}
-            >
-                <CheckBox $checked={checked}></CheckBox>
-                <InfoContainer>
-                    <Title>{title}</Title>
-                    {updatedAt && <Subtitle>{updatedAt}</Subtitle>}
-                    <Subtitle>{createdAt}</Subtitle>
-                </InfoContainer>
-            </View>
+            <CheckBox $checked={checked}></CheckBox>
+            <InfoContainer>
+                <Title>{title}</Title>
+                {updatedAt && <Subtitle>{updatedAt}</Subtitle>}
+                <Subtitle>{createdAt}</Subtitle>
+            </InfoContainer>
 
             <ButtonsContainer>
                 <EditButton onPress={onEdit}>

@@ -6,9 +6,10 @@ import {
     softDeleteById,
     updateById,
 } from '../repositories/TaskRepository';
+import * as Crypto from 'expo-crypto';
 
 export async function createTask(db: SQLiteDatabase, title: string) {
-    const id = crypto.randomUUID();
+    const id = Crypto.randomUUID();
     const now = new Date().toISOString();
 
     await insert(db, id, title, now);

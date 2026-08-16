@@ -7,7 +7,7 @@ type ModalOptions = {
     inputLabel?: string;
     inputPlaceholder?: string;
     onCancel: () => void;
-    onConfirm: () => void;
+    onConfirm: (value: string) => void;
 };
 
 type ModalContextData = {
@@ -16,7 +16,7 @@ type ModalContextData = {
         inputLabel?: string;
         inputPlaceholder?: string;
         onCancel: () => void;
-        onConfirm: () => void;
+        onConfirm: (value: string) => void;
     }) => void;
 
     closeModal: () => void;

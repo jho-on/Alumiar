@@ -1,6 +1,6 @@
 import HorizontalStepper from '@/shared/components/HorizontalStepper/HorizontalStepper';
 import { useState } from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import CompletionInfo from '../components/CompletionInfo/CompletionInfo';
 import { colors } from '@/shared/theme/colors';
 import TaskHeader from '../components/TaskHeader/TaskHeader';
@@ -116,7 +116,7 @@ export default function Routine({ setPage }: RoutineProps) {
     };
 
     return (
-        <View
+        <ScrollView
             style={{
                 backgroundColor: colors.background,
             }}
@@ -149,6 +149,6 @@ export default function Routine({ setPage }: RoutineProps) {
                 lastUpdated="Ultima atualização: 20 abr. de 2025"
                 onHistoryPress={() => setPage('History')}
             ></TaskFooter>
-        </View>
+        </ScrollView>
     );
 }

@@ -1,7 +1,40 @@
+import { useModal } from '@/shared/contexts/ModalContext';
 import { Container, NewTaskButton, NewTaskButtonText, Title } from './style';
+import { useSQLiteContext } from 'expo-sqlite';
+import { createTask } from '@/shared/services/TaskService';
+import { useToast } from '@/shared/contexts/ToastContext';
 
 export default function TaskHeader() {
-    const handleNewTask = () => {};
+    const { openModal, closeModal } = useModal();
+    const { showToast } = useToast();
+
+    const db = useSQLiteContext();
+
+    const handleConfirmModal = async (value: string) => {
+        try {
+            const title = value.trim();
+            const formattedTitle =
+                title.charAt(0).toUpperCase() + title.slice(1);
+
+            await createTask(db, formattedTitle);
+            closeModal();
+            showToast('Tarefa "' + formattedTitle + '" criada!');
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleNewTask = () => {
+        openModal({
+            title: 'Nova Tarefa',
+            inputLabel: 'Nome da tarefa',
+            inputPlaceholder: 'Varrer a casa',
+            onCancel: () => {
+                closeModal();
+            },
+            onConfirm: handleConfirmModal,
+        });
+    };
 
     return (
         <Container>

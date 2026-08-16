@@ -12,13 +12,14 @@ import {
     InputLabel,
     Title,
 } from './style';
+import { useState } from 'react';
 
 type ModalProps = {
     title: string;
     inputLabel?: string;
     inputPlaceholder?: string;
     onCancel: () => void;
-    onConfirm: () => void;
+    onConfirm: (value: string) => void;
 };
 
 export default function Modal({
@@ -28,6 +29,7 @@ export default function Modal({
     onCancel,
     onConfirm,
 }: ModalProps) {
+    const [value, setValue] = useState('');
     return (
         <Container>
             <Background>
@@ -39,6 +41,8 @@ export default function Modal({
                         <Input
                             placeholder={inputPlaceholder}
                             placeholderTextColor={colors.border}
+                            value={value}
+                            onChangeText={setValue}
                         ></Input>
                     </InputContainer>
                 )}
@@ -47,7 +51,7 @@ export default function Modal({
                     <CancelButton onPress={onCancel}>
                         <CancelButtonText>Cancelar</CancelButtonText>
                     </CancelButton>
-                    <ConfirmButton onPress={onConfirm}>
+                    <ConfirmButton onPress={() => onConfirm(value)}>
                         <ConfirmButtonText>Confirmar</ConfirmButtonText>
                     </ConfirmButton>
                 </ButtonContainer>
