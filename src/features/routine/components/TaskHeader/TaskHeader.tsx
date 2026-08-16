@@ -4,7 +4,11 @@ import { useSQLiteContext } from 'expo-sqlite';
 import { createTask } from '@/shared/services/TaskService';
 import { useToast } from '@/shared/contexts/ToastContext';
 
-export default function TaskHeader() {
+type TaskHeaderProps = {
+    reloadTasks: () => Promise<void>;
+};
+
+export default function TaskHeader({ reloadTasks }: TaskHeaderProps) {
     const { openModal, closeModal } = useModal();
     const { showToast } = useToast();
 
@@ -17,6 +21,7 @@ export default function TaskHeader() {
                 title.charAt(0).toUpperCase() + title.slice(1);
 
             await createTask(db, formattedTitle);
+            await reloadTasks();
             closeModal();
             showToast('Tarefa "' + formattedTitle + '" criada!');
         } catch (error) {

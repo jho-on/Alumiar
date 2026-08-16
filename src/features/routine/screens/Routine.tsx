@@ -1,5 +1,5 @@
 import HorizontalStepper from '@/shared/components/HorizontalStepper/HorizontalStepper';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import CompletionInfo from '../components/CompletionInfo/CompletionInfo';
 import { colors } from '@/shared/theme/colors';
@@ -22,17 +22,32 @@ const months = [
 ];
 
 import { Page } from '@/shared/types/Page';
+import { useSQLiteContext } from 'expo-sqlite';
+import { getAll } from '@/shared/services/TaskService';
+import { Task as TaskType } from '@/shared/types/Task';
 
 type RoutineProps = {
     setPage: (page: Page) => void;
 };
 
 export default function Routine({ setPage }: RoutineProps) {
+    const db = useSQLiteContext();
     const date: Date = new Date();
 
     const [month, setMonth] = useState(date.getMonth());
     const [day, setDay] = useState(date.getDate());
     const [year, setYear] = useState(date.getFullYear());
+    const [tasks, setTasks] = useState<TaskType[]>([]);
+
+    const reloadTasks = useCallback(async () => {
+        const data = await getAll(db);
+        setTasks(data);
+    }, [db]);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        reloadTasks();
+    }, [reloadTasks]);
 
     const nextMonth = () => {
         let newMonth = month;
@@ -143,8 +158,8 @@ export default function Routine({ setPage }: RoutineProps) {
                 ></CompletionInfo>
             </View>
 
-            <TaskHeader></TaskHeader>
-            <TaskList></TaskList>
+            <TaskHeader reloadTasks={reloadTasks}></TaskHeader>
+            <TaskList tasks={tasks} reloadTasks={reloadTasks}></TaskList>
             <TaskFooter
                 lastUpdated="Ultima atualização: 20 abr. de 2025"
                 onHistoryPress={() => setPage('History')}

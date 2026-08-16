@@ -1,30 +1,20 @@
 import { useSQLiteContext } from 'expo-sqlite';
 import Task from '../Task/Task';
 import { Container } from './style';
-import { useEffect, useState } from 'react';
-import {
-    changeTitleById,
-    getAll,
-    markAsDeleted,
-} from '@/shared/services/TaskService';
+import { changeTitleById, markAsDeleted } from '@/shared/services/TaskService';
 import { Task as TaskType } from '@/shared/types/Task';
 import { useToast } from '@/shared/contexts/ToastContext';
 import { useModal } from '@/shared/contexts/ModalContext';
 
-export default function TaskList() {
+type TaskListProps = {
+    tasks: TaskType[];
+    reloadTasks: () => Promise<void>;
+};
+
+export default function TaskList({ tasks, reloadTasks }: TaskListProps) {
     const db = useSQLiteContext();
     const { showToast } = useToast();
     const { openModal, closeModal } = useModal();
-    const [tasks, setTasks] = useState<TaskType[]>([]);
-
-    useEffect(() => {
-        async function loadTasks() {
-            const data = await getAll(db);
-            setTasks(data);
-        }
-
-        loadTasks();
-    }, [db, tasks]);
 
     const handleDelete = (taskId: string, title: string) => {
         openModal({
@@ -33,6 +23,7 @@ export default function TaskList() {
             onConfirm: async () => {
                 try {
                     await markAsDeleted(db, taskId);
+                    await reloadTasks();
                     closeModal();
                     showToast('Tarefa "' + title + '" deletada!');
                 } catch (error) {
@@ -56,6 +47,7 @@ export default function TaskList() {
 
                 try {
                     await changeTitleById(db, taskId, formattedTitle);
+                    await reloadTasks();
                     closeModal();
                     showToast(
                         `Tarefa "${title}" atualizada para "${formattedTitle}"!`,
