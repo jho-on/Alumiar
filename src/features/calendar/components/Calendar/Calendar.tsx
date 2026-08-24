@@ -29,27 +29,6 @@ export default function Calendar({ year, month }: CalendarProps) {
         loadCompletedDays();
     }, [db, year, month]);
 
-    useEffect(() => {
-        const debug = async () => {
-            const tasks = await db.getAllAsync(`
-            SELECT id, title, createdAt, deletedAt
-            FROM task
-            ORDER BY createdAt
-        `);
-
-            const completions = await db.getAllAsync(`
-            SELECT taskId, date
-            FROM taskCompletion
-            ORDER BY date
-        `);
-
-            console.log('TASKS:', tasks);
-            console.log('COMPLETIONS:', completions);
-        };
-
-        debug();
-    }, [db]);
-
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const firstWeekDay = new Date(year, month, 1).getDay();
     const firstColumn = (firstWeekDay + 6) % 7;

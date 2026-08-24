@@ -94,7 +94,7 @@ export default function TaskList({
     };
 
     function formatDate(date: string) {
-        const parsedDate = new Date(date);
+        const [year, month, day] = date.split('-');
 
         const months = [
             'jan',
@@ -111,11 +111,7 @@ export default function TaskList({
             'dez',
         ];
 
-        const day = parsedDate.getDate().toString().padStart(2, '0');
-        const month = months[parsedDate.getMonth()];
-        const year = parsedDate.getFullYear();
-
-        return `${day} ${month} ${year}`;
+        return `${day} ${months[Number(month) - 1]} ${year}`;
     }
 
     const handleCheck = async (taskId: string) => {
@@ -140,6 +136,10 @@ export default function TaskList({
     return (
         <Container>
             {tasks.map((task) => {
+                if (task.createdAt > date) {
+                    return null;
+                }
+
                 const createdAt = `Criada em ${formatDate(task.createdAt)}`;
 
                 const updatedAt =
