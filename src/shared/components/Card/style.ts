@@ -41,11 +41,12 @@ export const BodyContainer = styled.View`
 `;
 
 export const BodyEntry = styled.View<{ $isLast?: boolean }>`
-    width: 98%;
+    width: 99%;
+    min-height: 80px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: ${spacing.xs}px ${spacing.md}px;
+    padding: ${spacing.xs}px ${spacing.sm}px;
     border-bottom-width: ${({ $isLast }) => ($isLast ? 0 : 1)}px;
     border-bottom-color: ${colors.border};
 `;
@@ -55,12 +56,24 @@ export const BodyTitle = styled.Text`
 
     font-size: ${typography.subtitle.fontSize}px;
     font-family: ${typography.title.fontFamily};
+    line-height: ${spacing.md}px;
 `;
+
 export const BodySubtitle = styled.Text`
     color: ${colors.border};
 
     font-size: ${typography.subtitle.fontSize}px;
     font-family: ${typography.subtitle.fontFamily};
+    line-height: ${spacing.md}px;
+`;
+
+export const BodyInfoSubtitle = styled.Text`
+    color: ${colors.border};
+
+    font-size: ${typography.subtitle.fontSize}px;
+    font-family: ${typography.subtitle.fontFamily};
+    text-align: right;
+    line-height: ${spacing.md}px;
 `;
 
 export const BodyInfo = styled.Text`
@@ -68,4 +81,7 @@ export const BodyInfo = styled.Text`
 
     font-size: ${typography.title.fontSize}px;
     font-family: ${typography.title.fontFamily};
+
+    text-align: right;
+    line-height: ${spacing.md}px;
 `;

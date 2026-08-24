@@ -84,3 +84,41 @@ export async function updateById(
         id,
     );
 }
+export async function getStatistics(db: SQLiteDatabase) {
+    const result = await db.getFirstAsync<{
+        completedTasks: number;
+        firstTaskDate: string | null;
+        lastCompletionDate: string | null;
+    }>(`
+        SELECT
+            (
+                SELECT COUNT(*)
+                FROM taskCompletion
+            ) AS completedTasks,
+
+            (
+                SELECT MIN(createdAt)
+                FROM task
+            ) AS firstTaskDate,
+
+            (
+                SELECT MAX(date)
+                FROM taskCompletion
+            ) AS lastCompletionDate;
+    `);
+
+    const tasks = await db.getAllAsync<{
+        createdAt: string;
+        deletedAt: string | null;
+    }>(`
+        SELECT createdAt, deletedAt
+        FROM task;
+    `);
+
+    return {
+        completedTasks: result?.completedTasks ?? 0,
+        firstTaskDate: result?.firstTaskDate ?? null,
+        lastCompletionDate: result?.lastCompletionDate ?? null,
+        tasks,
+    };
+}
