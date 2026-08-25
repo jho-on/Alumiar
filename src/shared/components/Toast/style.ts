@@ -1,9 +1,13 @@
+import { Animated, Pressable } from 'react-native';
+import styled from 'styled-components/native';
+
 import { colors } from '@/shared/theme/colors';
 import { spacing } from '@/shared/theme/spacing';
 import { typography } from '@/shared/theme/typography';
-import styled from 'styled-components/native';
 
-export const Container = styled.Pressable`
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+export const Container = styled(AnimatedPressable)`
     position: absolute;
 
     bottom: 128px;
