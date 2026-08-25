@@ -1,13 +1,23 @@
 import IconButton from '@/shared/components/IconButton/IconButton';
-import { Container, Title } from './style';
+import { Container, Title, TitleContainer } from './style';
+import { Page } from '@/shared/types/Page';
 
-export default function Header() {
-    const handleBackButton = () => {};
+type Props = {
+    setPage: (page: Page) => void;
+};
 
+export default function Header({ setPage }: Props) {
     return (
         <Container>
-            <IconButton icon="<" onPress={handleBackButton}></IconButton>
-            <Title>Historico de Alterações</Title>
+            <IconButton
+                icon="<"
+                onPress={() => {
+                    setPage('Routine');
+                }}
+            ></IconButton>
+            <TitleContainer pointerEvents="none">
+                <Title>Historico de Alterações</Title>
+            </TitleContainer>
         </Container>
     );
 }

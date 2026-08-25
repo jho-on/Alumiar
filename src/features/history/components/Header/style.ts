@@ -12,14 +12,16 @@ export const Container = styled.View`
 `;
 
 export const Title = styled.Text`
+    color: ${colors.text};
+    font-size: ${typography.subtitle.fontSize}px;
+    font-family: ${typography.title.fontFamily};
+`;
+
+export const TitleContainer = styled.View`
     position: absolute;
 
     left: 0;
     right: 0;
 
-    text-align: center;
-
-    color: ${colors.text};
-    font-size: ${typography.subtitle.fontSize}px;
-    font-family: ${typography.title.fontFamily};
+    align-items: center;
 `;

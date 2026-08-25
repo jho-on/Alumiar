@@ -13,18 +13,30 @@ import { Page } from '@/shared/types/Page';
 import DatabaseProvider from './database/DatabaseProvider';
 import { ModalProvider } from './shared/contexts/ModalContext';
 import { ToastProvider } from './shared/contexts/ToastContext';
+import {
+    SafeAreaProvider,
+    useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import { colors } from './shared/theme/colors';
 
 function AppContent() {
     const [page, setPage] = useState<Page>('Calendar');
+    const insets = useSafeAreaInsets();
 
     return (
         <ToastProvider>
             <ModalProvider>
-                <View style={{ flex: 1 }}>
+                <View
+                    style={{
+                        flex: 1,
+                        paddingTop: insets.top,
+                        backgroundColor: colors.background,
+                    }}
+                >
                     <View style={{ flex: 1 }}>
                         {page === 'Calendar' && <CalendarScreen />}
                         {page === 'Routine' && <Routine setPage={setPage} />}
-                        {page === 'History' && <History />}
+                        {page === 'History' && <History setPage={setPage} />}
                     </View>
 
                     <NavBar page={page} setPage={setPage} />
@@ -45,8 +57,10 @@ export default function App() {
     }
 
     return (
-        <DatabaseProvider>
-            <AppContent />
-        </DatabaseProvider>
+        <SafeAreaProvider>
+            <DatabaseProvider>
+                <AppContent />
+            </DatabaseProvider>
+        </SafeAreaProvider>
     );
 }
